@@ -1,8 +1,8 @@
 @import "tailwindcss";
+@plugin "daisyui";
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
 
-* {
+:root {
   background-color: #1c1c1c;
-  color: #ffffff;
   font-family: "Lora", serif;
 }
