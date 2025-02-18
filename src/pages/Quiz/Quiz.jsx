@@ -3,10 +3,12 @@ import Questions from "../../components/Questions/Questions";
 import useAllQuestions from "../../hooks/useAllQuestions";
 import { TiTick } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Countdown from "../../components/Countdown/Countdown";
 
 const Quiz = () => {
+  const location = useLocation();
+  const userName = location.state?.userName || "Guest";
   const [questions] = useAllQuestions();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
@@ -30,7 +32,7 @@ const Quiz = () => {
       setTimeLeft(30);
     } else {
       navigate("/result", {
-        state: { finalScore: score, totalAttempts: attemptCount },
+        state: { finalScore: score, totalAttempts: attemptCount, userName },
       });
     }
   };
@@ -129,7 +131,7 @@ const Quiz = () => {
           {currentIndex === questions.length - 1 ? (
             <Link
               to={"/result"}
-              state={{ finalScore: score, totalAttempts: attemptCount }}
+              state={{ finalScore: score, totalAttempts: attemptCount ,userName}}
               className="p-2 border bg-green-500 text-white rounded-md border-green-500 font-bold text-lg w-28 text-center"
             >
               Result

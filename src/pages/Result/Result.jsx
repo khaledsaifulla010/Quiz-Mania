@@ -6,6 +6,7 @@ const Result = () => {
   const location = useLocation();
   const finalScore = location.state?.finalScore || 0;
   const totalAttempts = location.state?.totalAttempts || 0;
+  const userName = location.state?.userName || "Guest";
 
   return (
     <div className="text-white mt-12">
@@ -13,7 +14,7 @@ const Result = () => {
 
       <div className="border max-w-[800px] mx-auto p-8 rounded-md text-slate-300 space-y-4 mt-12">
         <div className=" flex items-center justify-between px-8 text-2xl font-bold">
-          <span>UserName </span>
+          <span>UserName : {userName} </span>
           <span>Daily Tuition </span>
         </div>
         <div className=" flex items-center justify-between px-8 text-xl font-bold">
@@ -34,7 +35,11 @@ const Result = () => {
         </div>
         <div className=" flex items-center justify-between px-8 text-xl font-bold">
           <span>Quiz Result </span>
-          <span>Passed </span>
+          {finalScore > 20 ? (
+            <span className="text-green-500 font-bold">Passed </span>
+          ) : (
+            <span className="text-red-500 font-bold">Failed </span>
+          )}
         </div>
       </div>
       {/* Restart */}

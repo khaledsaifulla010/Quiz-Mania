@@ -1,8 +1,17 @@
-import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Main = () => {
-  const inputRef = useRef(null);
+  const [userName, setUserName] = useState("");
+  const navigate = useNavigate();
+
+  const handleStartQuiz = () => {
+    if (!userName.trim()) {
+      alert("Please enter a username before starting the quiz!");
+      return;
+    }
+    navigate("/quiz", { state: { userName } });
+  };
 
   return (
     <div>
@@ -31,21 +40,21 @@ const Main = () => {
       </div>
       {/* Username Form */}
       <div className="flex items-center gap-2">
-        <form>
-          <input
-            required
-            className="bg-white p-2 w-[300px] h-12 rounded-md mt-12 ml-[570px]"
-            ref={inputRef}
-            type="text"
-            placeholder="Enter Your UserName Please"
-          />
-        </form>
-        <Link
-          to={"/quiz"}
+        <input
+          required
+          className="bg-white p-2 w-[300px] h-12 rounded-md mt-12 ml-[570px]"
+          type="text"
+          placeholder="Enter Your Username"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+        />
+
+        <button
+          onClick={handleStartQuiz}
           className="p-2 w-32 text-center text-xl border border-green-500 bg-green-500 text-white rounded-md mt-12 font-bold"
         >
           Start Quiz
-        </Link>
+        </button>
       </div>
     </div>
   );
