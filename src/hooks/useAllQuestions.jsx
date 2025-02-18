@@ -6,7 +6,7 @@ const useAllQuestions = () => {
     fetch("/data.json")
       .then((res) => res.json())
       .then((data) => {
-        setQuestion(data[0]);
+        setQuestion(data);
       });
   }, []);
   return [questions];
