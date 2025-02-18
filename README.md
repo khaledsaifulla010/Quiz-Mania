@@ -78,5 +78,5 @@ npm run dev
   }
 }
 
-💡 Made with ❤️ by **Khaled Saifulla**
 ```
+💡 Made with ❤️ by **Khaled Saifulla**
