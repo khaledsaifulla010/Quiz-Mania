@@ -3,6 +3,7 @@ import Questions from "../../components/Questions/Questions";
 import useAllQuestions from "../../hooks/useAllQuestions";
 import { TiTick } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
+import { Link } from "react-router-dom";
 
 const Quiz = () => {
   const [questions] = useAllQuestions();
@@ -88,13 +89,21 @@ const Quiz = () => {
           >
             Previous
           </button>
-          <button
-            onClick={handleNext}
-            className="p-2 border bg-purple-500 text-white rounded-md border-purple-500 font-bold text-lg w-28 text-center"
-            disabled={currentIndex === questions.length - 1}
-          >
-            Next
-          </button>
+          {currentIndex === questions.length - 1 ? (
+            <Link
+              to={"/result"}
+              className="p-2 border bg-green-500 text-white rounded-md border-green-500 font-bold text-lg w-28 text-center"
+            >
+              Result
+            </Link>
+          ) : (
+            <button
+              onClick={handleNext}
+              className="p-2 border bg-purple-500 text-white rounded-md border-purple-500 font-bold text-lg w-28 text-center"
+            >
+              Next
+            </button>
+          )}
         </div>
       </div>
     </div>
