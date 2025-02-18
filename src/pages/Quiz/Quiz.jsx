@@ -46,6 +46,9 @@ const Quiz = () => {
     <div className="text-white">
       <h1 className="mt-16 font-bold text-5xl text-center">Quiz Mania</h1>
       <div className="mt-12 border max-w-[1000px]  mx-auto rounded-md">
+        <h1 className=" ml-1  mt-1.5 text-lg font-bold text-center  bg-pink-100 text-pink-600 border-pink-300 w-[70px] h-7  border  rounded-md">
+          {currentIndex + 1} of {questions.length}{" "}
+        </h1>
         {/* Pass the Current Question */}
         <div className="px-12 mt-8">
           {questions.length > 0 && (
@@ -82,13 +85,22 @@ const Quiz = () => {
 
         {/* Previous & Next Button */}
         <div className="mt-16 mb-4 flex items-center justify-between px-8">
-          <button
-            onClick={handlePrevious}
-            className="p-2 border bg-orange-500 text-white rounded-md border-orange-500 font-bold text-lg w-28 text-center"
-            disabled={currentIndex === 0}
-          >
-            Previous
-          </button>
+          {currentIndex === 0 ? (
+            <Link
+              to={"/"}
+              className="p-2 border bg-green-500 text-white rounded-md border-green-500 font-bold text-lg w-28 text-center"
+            >
+              Home
+            </Link>
+          ) : (
+            <button
+              onClick={handlePrevious}
+              className="p-2 border bg-orange-500 text-white rounded-md border-orange-500 font-bold text-lg w-28 text-center"
+            >
+              Previous
+            </button>
+          )}
+
           {currentIndex === questions.length - 1 ? (
             <Link
               to={"/result"}

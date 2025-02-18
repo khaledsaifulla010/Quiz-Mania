@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import useAllQuestions from "../../hooks/useAllQuestions";
 
 const Result = () => {
+  const [questions] = useAllQuestions();
+  console.log(questions);
+
   return (
     <div className="text-white mt-12">
       <h1 className="text-5xl font-bold text-center">Result</h1>
@@ -16,7 +20,7 @@ const Result = () => {
         </div>
         <div className=" flex items-center justify-between px-8 text-xl font-bold">
           <span>Total Questions : </span>
-          <span>10 </span>
+          <span>{questions.length} </span>
         </div>
         <div className=" flex items-center justify-between px-8 text-xl font-bold">
           <span>Total Attempts : </span>
