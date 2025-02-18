@@ -3,7 +3,7 @@ import Questions from "../../components/Questions/Questions";
 import useAllQuestions from "../../hooks/useAllQuestions";
 import { TiTick } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Countdown from "../../components/Countdown/Countdown";
 
 const Quiz = () => {
@@ -12,6 +12,8 @@ const Quiz = () => {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [answerStatus, setAnswerStatus] = useState(null);
   const [timeLeft, setTimeLeft] = useState(30);
+  const [score, setScore] = useState(0);
+  const navigate = useNavigate();
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
@@ -25,6 +27,8 @@ const Quiz = () => {
       setCurrentIndex(currentIndex + 1);
       setAnswerStatus(null);
       setTimeLeft(30);
+    } else {
+      navigate("/result", { state: { finalScore: score } });
     }
   };
 
@@ -40,6 +44,7 @@ const Quiz = () => {
       const correctAnswer = questions.find((q) => q.id === questionId).answer;
       if (answer == correctAnswer) {
         setAnswerStatus({ status: "correct" });
+        setScore(score + 5);
       } else {
         setAnswerStatus({ status: "wrong", correctAnswer });
       }
@@ -118,6 +123,7 @@ const Quiz = () => {
           {currentIndex === questions.length - 1 ? (
             <Link
               to={"/result"}
+              state={{ finalScore: score }}
               className="p-2 border bg-green-500 text-white rounded-md border-green-500 font-bold text-lg w-28 text-center"
             >
               Result

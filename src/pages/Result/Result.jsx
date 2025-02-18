@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useAllQuestions from "../../hooks/useAllQuestions";
 
 const Result = () => {
   const [questions] = useAllQuestions();
-  console.log(questions);
+  const location = useLocation();
+  const finalScore = location.state?.finalScore || 0;
 
   return (
     <div className="text-white mt-12">
@@ -28,7 +29,7 @@ const Result = () => {
         </div>
         <div className=" flex items-center justify-between px-8 text-xl font-bold">
           <span>Total Earn Points : </span>
-          <span>30 </span>
+          <span>{finalScore} </span>
         </div>
         <div className=" flex items-center justify-between px-8 text-xl font-bold">
           <span>Quiz Result </span>
