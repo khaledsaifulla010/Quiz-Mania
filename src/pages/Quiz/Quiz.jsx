@@ -1,31 +1,45 @@
 import { useState } from "react";
 import Questions from "../../components/Questions/Questions";
 import useAllQuestions from "../../hooks/useAllQuestions";
+import { TiTick } from "react-icons/ti";
+import { ImCross } from "react-icons/im";
 
 const Quiz = () => {
   const [questions] = useAllQuestions();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [answerStatus, setAnswerStatus] = useState(null);
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
+      setAnswerStatus(null);
     }
   };
   const handleNext = () => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1);
+      setAnswerStatus(null);
     }
   };
 
   // Function to update the selected answer for a question
   const handleAnswerSelection = (questionId, answer) => {
-    setSelectedAnswers((prev) => ({
-      ...prev,
-      [questionId]: answer,
-    }));
+    if (!selectedAnswers[questionId]) {
+      setSelectedAnswers((prev) => ({
+        ...prev,
+        [questionId]: answer,
+      }));
+
+      // Check if the answer is correct
+      const correctAnswer = questions.find((q) => q.id === questionId).answer;
+      if (answer == correctAnswer) {
+        setAnswerStatus({ status: "correct" });
+      } else {
+        setAnswerStatus({ status: "wrong", correctAnswer });
+      }
+    }
   };
-  console.log(selectedAnswers);
 
   return (
     <div className="text-white">
@@ -43,6 +57,27 @@ const Quiz = () => {
             />
           )}
         </div>
+        {/* Show feedback on answer selection */}
+        {answerStatus && (
+          <p className="text-center text-xl font-bold mt-6 flex items-center justify-center gap-2">
+            {answerStatus.status === "correct" ? (
+              <>
+                <TiTick className="text-green-500 text-3xl" />
+                <span className="text-green-500">Your answer is correct!</span>
+              </>
+            ) : (
+              <>
+                <ImCross className="text-red-500 text-2xl" />
+                <span className="text-red-500">
+                  Your answer is wrong.{" "}
+                  <span className="text-green-500">
+                    Correct answer is : ( {answerStatus.correctAnswer} )
+                  </span>
+                </span>
+              </>
+            )}
+          </p>
+        )}
 
         {/* Previous & Next Button */}
         <div className="mt-16 mb-4 flex items-center justify-between px-8">

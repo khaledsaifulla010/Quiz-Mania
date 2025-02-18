@@ -5,14 +5,13 @@ const Questions = ({ question, selectedAnswer, onAnswerSelect }) => {
 
   // Reset input field when a new question loads
   useEffect(() => {
-    setInputValue(""); // Clear input when question changes
+    setInputValue("");
   }, [question.id]);
 
   // Handle change for input-based answers (only allows numbers)
   const handleInputChange = (event) => {
     const value = event.target.value;
     if (/^\d*$/.test(value)) {
-      // Allow only numeric input
       setInputValue(value);
       onAnswerSelect(question.id, value);
     }
@@ -39,9 +38,13 @@ const Questions = ({ question, selectedAnswer, onAnswerSelect }) => {
               />
               <label
                 htmlFor={`q${question.id}-option-${key}`}
-                className="text-xl font-semibold"
+                className={`text-xl font-semibold ${
+                  selectedAnswer ? "opacity-50" : ""
+                }`}
               >
-                {value}
+                <span className="ml-4">
+                  {key} . {value}
+                </span>
               </label>
             </li>
           ))}
