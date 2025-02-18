@@ -1,53 +1,54 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useAllQuestions from "../../hooks/useAllQuestions";
 
 const Questions = () => {
   const [checked, setChecked] = useState();
-  const [question, setQuestion] = useState([]);
 
-  useEffect(() => {
-    fetch("/data.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setQuestion(data[0]);
-      });
-  }, []);
-  console.log(question);
+  const [questions] = useAllQuestions(null);
+  console.log(questions);
 
-  const handleSelect = () => {
-    console.log("Select");
+  const handleSelect = (option) => {
+    setChecked(option);
   };
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Quiz Question</h1>
-      {question ? (
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold">
-            {question.id}. {question.question}
-          </h2>
-          {question.options && (
-            <ul className="ml-8 mt-2">
-              {Object.entries(question.options).map(([key, value]) => (
-                <li key={key} className="flex items-center gap-2">
-                  <input
-                    className="w-[12px] h-[12px] scale-150"
-                    type="radio"
-                    name="question"
-                    id={`q1-option-${key}`}
-                    onChange={() => handleSelect(key)}
-                  />
-                  <label htmlFor={`q1-option-${key}`} className="text-lg">
-                    {value}
-                  </label>
-                </li>
-                
-              ))}
-            </ul>
-          )}
-        </div>
-      ) : (
-        <p>Loading question...</p>
-      )}
+      <div>
+        {questions ? (
+          <div className="mb-6">
+            <h2 className="text-3xl font-bold flex items-center gap-2">
+              <span className="border border-cyan-700 flex items-center justify-center text-2xl font-bold w-10 h-10 rounded-full">
+                {questions.id}
+              </span>
+              {questions.question}
+            </h2>
+            {questions.options && (
+              <ul className="ml-8 mt-4 space-y-2">
+                {Object.entries(questions.options).map(([key, value]) => (
+                  <li key={key} className="flex items-center gap-2">
+                    <input
+                      className="w-[16px] h-[16px] scale-150 accent-green-500"
+                      type="radio"
+                      name="question"
+                      id={`q1-option-${key}`}
+                      checked={checked === key}
+                      onChange={() => handleSelect(key)}
+                    />
+                    <label
+                      htmlFor={`q1-option-${key}`}
+                      className="text-xl font-semibold"
+                    >
+                      {value}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ) : (
+          <p>Loading question...</p>
+        )}
+      </div>
     </div>
   );
 };

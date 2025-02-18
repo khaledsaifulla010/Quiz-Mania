@@ -13,25 +13,27 @@ const Quiz = () => {
       <h1 className="mt-8 ml-4 font-bold text-3xl">
         Give Quiz Answer Carefully!
       </h1>
-      {/* All Quiz Questions */}
-      <div className="mt-12">
-        <Questions></Questions>
-      </div>
+      <div className="mt-12 border max-w-[800px] h-[350px] mx-auto rounded-md">
+        {/* All Quiz Questions */}
+        <div className="px-12 mt-4">
+          <Questions></Questions>
+        </div>
 
-      {/* Previous & Next Button */}
-      <div className="mt-8 flex items-center gap-8">
-        <button
-          onClick={handlePrevious}
-          className="p-2 border bg-orange-500 text-white rounded-md border-orange-500 font-bold text-lg w-28 text-center"
-        >
-          Previous
-        </button>
-        <button
-          onClick={handleNext}
-          className="p-2 border bg-purple-500 text-white rounded-md border-purple-500 font-bold text-lg w-28 text-center"
-        >
-          Next
-        </button>
+        {/* Previous & Next Button */}
+        <div className="mt-20 flex items-center justify-between px-8">
+          <button
+            onClick={handlePrevious}
+            className="p-2 border bg-orange-500 text-white rounded-md border-orange-500 font-bold text-lg w-28 text-center"
+          >
+            Previous
+          </button>
+          <button
+            onClick={handleNext}
+            className="p-2 border bg-purple-500 text-white rounded-md border-purple-500 font-bold text-lg w-28 text-center"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
