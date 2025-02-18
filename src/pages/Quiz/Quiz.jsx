@@ -4,23 +4,27 @@ import useAllQuestions from "../../hooks/useAllQuestions";
 import { TiTick } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
 import { Link } from "react-router-dom";
+import Countdown from "../../components/Countdown/Countdown";
 
 const Quiz = () => {
   const [questions] = useAllQuestions();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [answerStatus, setAnswerStatus] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(30);
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
       setAnswerStatus(null);
+      setTimeLeft(30);
     }
   };
   const handleNext = () => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setAnswerStatus(null);
+      setTimeLeft(30);
     }
   };
 
@@ -46,9 +50,19 @@ const Quiz = () => {
     <div className="text-white">
       <h1 className="mt-16 font-bold text-5xl text-center">Quiz Mania</h1>
       <div className="mt-12 border max-w-[1000px]  mx-auto rounded-md">
-        <h1 className=" ml-1  mt-1.5 text-lg font-bold text-center  bg-pink-100 text-pink-600 border-pink-300 w-[70px] h-7  border  rounded-md">
-          {currentIndex + 1} of {questions.length}{" "}
-        </h1>
+        <div className="flex items-center justify-between">
+          <h1 className=" ml-1  mt-1.5 text-lg font-bold text-center  bg-pink-100 text-pink-600 border-pink-300 w-[70px] h-7  border  rounded-md">
+            {currentIndex + 1} of {questions.length}{" "}
+          </h1>
+          <div className="px-2">
+            <Countdown
+              timeLeft={timeLeft}
+              setTimeLeft={setTimeLeft}
+              handleNext={handleNext}
+              currentIndex={currentIndex}
+            ></Countdown>
+          </div>
+        </div>
         {/* Pass the Current Question */}
         <div className="px-12 mt-8">
           {questions.length > 0 && (
