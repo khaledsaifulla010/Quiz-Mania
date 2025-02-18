@@ -13,6 +13,7 @@ const Quiz = () => {
   const [answerStatus, setAnswerStatus] = useState(null);
   const [timeLeft, setTimeLeft] = useState(30);
   const [score, setScore] = useState(0);
+  const [attemptCount, setAttemptCount] = useState(0);
   const navigate = useNavigate();
 
   const handlePrevious = () => {
@@ -28,7 +29,9 @@ const Quiz = () => {
       setAnswerStatus(null);
       setTimeLeft(30);
     } else {
-      navigate("/result", { state: { finalScore: score } });
+      navigate("/result", {
+        state: { finalScore: score, totalAttempts: attemptCount },
+      });
     }
   };
 
@@ -39,6 +42,9 @@ const Quiz = () => {
         ...prev,
         [questionId]: answer,
       }));
+
+      // Increase attempt count when user selects an answer
+      setAttemptCount((prev) => prev + 1);
 
       // Check if the answer is correct
       const correctAnswer = questions.find((q) => q.id === questionId).answer;
@@ -123,7 +129,7 @@ const Quiz = () => {
           {currentIndex === questions.length - 1 ? (
             <Link
               to={"/result"}
-              state={{ finalScore: score }}
+              state={{ finalScore: score, totalAttempts: attemptCount }}
               className="p-2 border bg-green-500 text-white rounded-md border-green-500 font-bold text-lg w-28 text-center"
             >
               Result

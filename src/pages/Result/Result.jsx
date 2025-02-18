@@ -5,6 +5,7 @@ const Result = () => {
   const [questions] = useAllQuestions();
   const location = useLocation();
   const finalScore = location.state?.finalScore || 0;
+  const totalAttempts = location.state?.totalAttempts || 0;
 
   return (
     <div className="text-white mt-12">
@@ -25,7 +26,7 @@ const Result = () => {
         </div>
         <div className=" flex items-center justify-between px-8 text-xl font-bold">
           <span>Total Attempts : </span>
-          <span>03 </span>
+          <span>{totalAttempts} </span>
         </div>
         <div className=" flex items-center justify-between px-8 text-xl font-bold">
           <span>Total Earn Points : </span>
