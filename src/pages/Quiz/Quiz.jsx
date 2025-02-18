@@ -5,7 +5,8 @@ import { TiTick } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Countdown from "../../components/Countdown/Countdown";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Quiz = () => {
   const location = useLocation();
   const userName = location.state?.userName || "Guest";
@@ -57,6 +58,13 @@ const Quiz = () => {
         setAnswerStatus({ status: "wrong", correctAnswer });
       }
     }
+  };
+
+  const handleShowResultToast = () => {
+    toast.success("Sucessfully Complete Quiz!", {
+      position: "top-center",
+      theme: "colored",
+    });
   };
 
   return (
@@ -130,8 +138,13 @@ const Quiz = () => {
 
           {currentIndex === questions.length - 1 ? (
             <Link
+              onClick={handleShowResultToast}
               to={"/result"}
-              state={{ finalScore: score, totalAttempts: attemptCount ,userName}}
+              state={{
+                finalScore: score,
+                totalAttempts: attemptCount,
+                userName,
+              }}
               className="p-2 border bg-green-500 text-white rounded-md border-green-500 font-bold text-lg w-28 text-center"
             >
               Result

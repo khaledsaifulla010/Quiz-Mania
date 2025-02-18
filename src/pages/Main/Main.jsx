@@ -1,13 +1,17 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Main = () => {
   const [userName, setUserName] = useState("");
   const navigate = useNavigate();
 
   const handleStartQuiz = () => {
     if (!userName.trim()) {
-      alert("Please enter a username before starting the quiz!");
+      toast.error("Please Add Your UserName!", {
+        position: "top-center",
+        theme: "colored",
+      });
       return;
     }
     navigate("/quiz", { state: { userName } });
